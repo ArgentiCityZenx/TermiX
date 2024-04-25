@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Web</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000;
+            color: #00FF00;
+            margin: 0;
+            padding: 20px;
+        }
+        #terminal {
+            width: 100%;
+            height: 400px;
+            background-color: #000;
+            color: #00FF00;
+            border: 2px solid #00FF00;
+            overflow: auto;
+        }
+        input[type="text"] {
+            width: 100%;
+            background-color: #000;
+            color: #00FF00;
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Terminal Web</h1>
+    <div id="terminal"></div>
+    <input type="text" id="commandInput" autofocus>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const commandInput = document.getElementById('commandInput');
+
+        function echo(message) {
+            terminal.innerHTML += `<div>${message}</div>`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function processCommand(command) {
+            const args = command.split(' ');
+            switch (args[0].toLowerCase()) {
+                case 'help':
+                    echo('Available commands:');
+                    echo('- help: Show this help message');
+                    echo('- echo [message]: Repeat the message');
+                    echo('- clear: Clear the terminal');
+                    echo('- date: Display the current date and time');
+                    echo('- color [color]: Change text color (e.g., color green)');
+                    echo('- about: Show information about this terminal');
+                    break;
+                case 'clear':
+                    terminal.innerHTML = '';
+                    break;
+                case 'date':
+                    const currentDate = new Date().toLocaleString();
+                    echo(`Current date and time: ${currentDate}`);
+                    break;
+                case 'color':
+                    if (args.length < 2) {
+                        echo('Please provide a color (e.g., color green)');
+                    } else {
+                        const color = args[1];
+                        document.body.style.color = color;
+                        echo(`Text color changed to ${color}`);
+                    }
+                    break;
+                case 'about':
+                    echo('Terminal Web v1.0');
+                    echo('Created by ArgentiCityZenX');
+                    break;
+                default:
+                    if (command.startsWith('echo ')) {
+                        const message = command.substring(5);
+                        echo(message);
+                    } else {
+                        echo(`Command not found: ${command}`);
+                    }
+                    break;
+            }
+        }
+
+        commandInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const command = commandInput.value;
+                echo(`> ${command}`);
+                processCommand(command);
+                commandInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
