@@ -54,6 +54,7 @@
                     echo('- date: Display the current date and time');
                     echo('- color [color]: Change text color (e.g., color green)');
                     echo('- about: Show information about this terminal');
+                    echo('- dice: Roll a six-sided dice');
                     break;
                 case 'clear':
                     terminal.innerHTML = '';
@@ -70,6 +71,10 @@
                         document.body.style.color = color;
                         echo(`Text color changed to ${color}`);
                     }
+                    break;
+                case 'dice':
+                    const diceRoll = Math.floor(Math.random() * 6) + 1;
+                    echo(`You rolled a ${diceRoll}!`);
                     break;
                 case 'about':
                     echo('Terminal Web v1.0');
