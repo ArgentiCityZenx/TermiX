@@ -55,7 +55,6 @@
                     echo('- color [color]: Change text color (e.g., color green)');
                     echo('- about: Show information about this terminal');
                     echo('- dice: Roll a six-sided dice');
-                    echo('- calc: solve a Mathematical calculation');
                     break;
                 case 'clear':
                     terminal.innerHTML = '';
@@ -87,19 +86,6 @@
                         echo(message);
                     } else {
                         echo(`Command not found: ${command}`);
-                    }
-                    break;
-                case 'calc':
-                    if (args.length < 2) {
-                        echo('Please provide a mathematical expression (e.g., calc 2+2)');
-                    } else {
-                        const expression = args.slice(1).join(' ');
-                        try {
-                            const result = eval(expression);
-                            echo(`Result: ${result}`);
-                        } catch (error) {
-                            echo('Invalid expression');
-                        }
                     }
                     break;
             }
